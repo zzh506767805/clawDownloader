@@ -20,18 +20,18 @@ function goToStep(step) {
   prevBtn.style.visibility = step === 0 ? "hidden" : "visible";
 
   if (step === 0) {
-    nextBtn.textContent = "Install Now";
+    nextBtn.textContent = "开始安装";
     nextBtn.disabled = false;
     nextBtn.style.display = "";
   } else if (step === 1) {
     nextBtn.style.display = "none";
     runFullInstall();
   } else if (step === 2) {
-    nextBtn.textContent = "Configure & Continue";
+    nextBtn.textContent = "配置并继续";
     nextBtn.disabled = false;
     nextBtn.style.display = "";
   } else if (step === 3) {
-    nextBtn.textContent = "Close";
+    nextBtn.textContent = "关闭";
     nextBtn.disabled = false;
     nextBtn.style.display = "";
   }
@@ -49,32 +49,32 @@ async function runFullInstall() {
   try {
     env = await invoke("check_environment");
   } catch (e) {
-    showAction(`<p style="color:#ff6b4a">Environment check failed: ${e}</p>`);
+    showAction(`<p style="color:#ff6b4a">环境检测失败：${e}</p>`);
     return;
   }
 
-  setStatus("env-node", env.node_installed, "node-ver", env.node_version);
-  setStatus("env-npm", env.npm_installed, "npm-ver", env.npm_version);
-  setStatus("env-claw", env.openclaw_installed, "claw-ver", env.openclaw_version);
+  setStatus("env-node", env.node_installed, "node-ver", env.node_installed ? env.node_version : "未安装");
+  setStatus("env-npm", env.npm_installed, "npm-ver", env.npm_installed ? env.npm_version : "未安装");
+  setStatus("env-claw", env.openclaw_installed, "claw-ver", env.openclaw_installed ? env.openclaw_version : "未安装");
 
   // If Node.js missing, offer to install
   if (!env.node_installed) {
     showAction(
-      '<p style="color:#ff6b4a;font-size:13px;margin-bottom:8px;">Node.js is required.</p>' +
-      '<button class="btn btn-primary" id="btn-install-node">Install Node.js via Homebrew</button>'
+      '<p style="color:#ff6b4a;font-size:13px;margin-bottom:8px;">需要安装 Node.js</p>' +
+      '<button class="btn btn-primary" id="btn-install-node">通过 Homebrew 安装 Node.js</button>'
     );
     document.getElementById("btn-install-node").onclick = async () => {
-      showAction('<p style="color:#888;font-size:13px;">Installing Node.js...</p>');
+      showAction('<p style="color:#888;font-size:13px;">正在安装 Node.js...</p>');
       try {
         const r = await invoke("install_node");
         if (r.success) {
-          showAction('<p style="color:#4ade80;font-size:13px;">Node.js installed! Continuing...</p>');
+          showAction('<p style="color:#4ade80;font-size:13px;">Node.js 安装成功！继续中...</p>');
           setTimeout(runFullInstall, 500);
         } else {
           showAction(`<p style="color:#ff6b4a;font-size:13px;">${r.message}</p>`);
         }
       } catch (e) {
-        showAction(`<p style="color:#ff6b4a;font-size:13px;">Error: ${e}</p>`);
+        showAction(`<p style="color:#ff6b4a;font-size:13px;">错误：${e}</p>`);
       }
     };
     return;
@@ -82,7 +82,7 @@ async function runFullInstall() {
 
   // If OpenClaw already installed, skip to configure
   if (env.openclaw_installed) {
-    showAction('<p style="color:#4ade80;font-size:13px;">OpenClaw is already installed!</p>');
+    showAction('<p style="color:#4ade80;font-size:13px;">OpenClaw 已安装！</p>');
     setTimeout(() => goToStep(2), 1000);
     return;
   }
@@ -93,15 +93,15 @@ async function runFullInstall() {
   const log = document.getElementById("install-log");
   installSection.style.display = "";
 
-  log.textContent = "Installing OpenClaw...\n";
+  log.textContent = "正在安装 OpenClaw...\n";
   bar.style.width = "0%";
 
   let pct = 5, shown = -1;
   const msgs = [
-    [8, "[npm] Resolving dependencies..."],
-    [25, "[npm] Downloading openclaw..."],
-    [50, "[npm] Installing packages..."],
-    [75, "[npm] Linking binaries..."],
+    [8, "[npm] 解析依赖..."],
+    [25, "[npm] 下载 OpenClaw..."],
+    [50, "[npm] 安装组件..."],
+    [75, "[npm] 链接程序..."],
   ];
   const timer = setInterval(() => {
     if (pct < 90) {
@@ -126,15 +126,15 @@ async function runFullInstall() {
 
     if (r.success) {
       bar.style.width = "100%";
-      log.textContent += "\nDone!";
-      setStatus("env-claw", true, "claw-ver", "Installed");
+      log.textContent += "\n安装完成！";
+      setStatus("env-claw", true, "claw-ver", "已安装");
       setTimeout(() => goToStep(2), 1500);
     } else {
       bar.style.width = "100%";
       bar.style.background = "#dc2626";
       log.textContent += "\n" + r.message;
       showAction(
-        '<button class="btn btn-primary" id="btn-retry">Retry</button>'
+        '<button class="btn btn-primary" id="btn-retry">重试</button>'
       );
       document.getElementById("btn-retry").onclick = () => {
         hideAction();
@@ -145,7 +145,7 @@ async function runFullInstall() {
     }
   } catch (e) {
     clearInterval(timer);
-    log.textContent += "\nError: " + e;
+    log.textContent += "\n错误：" + e;
     bar.style.background = "#dc2626";
   }
 }
@@ -154,27 +154,27 @@ async function runFullInstall() {
 async function configureKimi() {
   const apiKey = document.getElementById("input-api-key").value.trim();
   if (!apiKey) {
-    showConfigStatus("Please enter your API key.", false);
+    showConfigStatus("请输入 API 密钥", false);
     return false;
   }
   if (!apiKey.startsWith("sk-")) {
-    showConfigStatus("API key should start with 'sk-'.", false);
+    showConfigStatus("API 密钥应以 'sk-' 开头", false);
     return false;
   }
 
-  showConfigStatus("Configuring Kimi AI...", null);
+  showConfigStatus("正在配置 Kimi AI...", null);
 
   try {
     const r = await invoke("configure_kimi", { apiKey });
     if (r.success) {
-      showConfigStatus("Kimi AI configured successfully!", true);
+      showConfigStatus("Kimi AI 配置成功！", true);
       return true;
     } else {
       showConfigStatus(r.message, false);
       return false;
     }
   } catch (e) {
-    showConfigStatus("Error: " + e, false);
+    showConfigStatus("错误：" + e, false);
     return false;
   }
 }
@@ -221,10 +221,10 @@ document.getElementById("link-moonshot").addEventListener("click", () => {
 document.getElementById("btn-dashboard").addEventListener("click", async () => {
   const btn = document.getElementById("btn-dashboard");
   btn.disabled = true;
-  btn.textContent = "Starting...";
+  btn.textContent = "启动中...";
   try {
     const r = await invoke("open_dashboard");
-    btn.textContent = "Dashboard Opened";
+    btn.textContent = "已打开控制台";
     // Show password if available
     if (r.log) {
       document.getElementById("gw-password").textContent = r.log;
@@ -232,10 +232,10 @@ document.getElementById("btn-dashboard").addEventListener("click", async () => {
     }
     setTimeout(() => {
       btn.disabled = false;
-      btn.textContent = "Open Dashboard";
+      btn.textContent = "打开控制台";
     }, 3000);
   } catch (e) {
-    btn.textContent = "Open Dashboard";
+    btn.textContent = "打开控制台";
     btn.disabled = false;
   }
 });
@@ -245,9 +245,9 @@ document.getElementById("btn-copy-pw").addEventListener("click", () => {
   const pw = document.getElementById("gw-password").textContent;
   if (pw) {
     navigator.clipboard.writeText(pw).then(() => {
-      document.getElementById("btn-copy-pw").textContent = "[copied!]";
+      document.getElementById("btn-copy-pw").textContent = "[已复制]";
       setTimeout(() => {
-        document.getElementById("btn-copy-pw").textContent = "[copy]";
+        document.getElementById("btn-copy-pw").textContent = "[复制]";
       }, 2000);
     });
   }

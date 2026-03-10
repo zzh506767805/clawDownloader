@@ -16,19 +16,19 @@
       <div class="steps">
         <div class="step active" data-step="0">
           <span class="step-dot"></span>
-          <span class="step-label">Welcome</span>
+          <span class="step-label">欢迎</span>
         </div>
         <div class="step" data-step="1">
           <span class="step-dot"></span>
-          <span class="step-label">Install</span>
+          <span class="step-label">安装</span>
         </div>
         <div class="step" data-step="2">
           <span class="step-dot"></span>
-          <span class="step-label">Configure</span>
+          <span class="step-label">配置</span>
         </div>
         <div class="step" data-step="3">
           <span class="step-dot"></span>
-          <span class="step-label">Done</span>
+          <span class="step-label">完成</span>
         </div>
       </div>
     </div>
@@ -36,28 +36,28 @@
     <div class="content">
       <!-- Step 0: Welcome -->
       <div class="page active" id="page-0">
-        <h1>OpenClaw Installer</h1>
-        <p class="desc">One-click install for OpenClaw on your Mac. We'll install OpenClaw, configure Kimi AI, and get your dashboard running.</p>
+        <h1>OpenClaw 安装器</h1>
+        <p class="desc">一键安装 OpenClaw AI 助手，自动配置 Kimi 模型并启动控制台。</p>
         <div class="feature-list">
           <div class="feature-item">
             <span class="feature-icon">&#9889;</span>
             <div>
-              <strong>Auto Install</strong>
-              <p>Installs Node.js (if needed) and OpenClaw via npm.</p>
+              <strong>自动安装</strong>
+              <p>自动检测并安装 Node.js 和 OpenClaw。</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-icon">&#128272;</span>
             <div>
-              <strong>Kimi AI Configuration</strong>
-              <p>Configure Moonshot Kimi API key and set as default model.</p>
+              <strong>配置 Kimi AI</strong>
+              <p>配置 Moonshot Kimi API 密钥，设为默认模型。</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-icon">&#128640;</span>
             <div>
-              <strong>Ready in Minutes</strong>
-              <p>From zero to a running AI assistant in under 5 minutes.</p>
+              <strong>几分钟搞定</strong>
+              <p>从零到可用的 AI 助手，只需几分钟。</p>
             </div>
           </div>
         </div>
@@ -65,28 +65,28 @@
 
       <!-- Step 1: Install -->
       <div class="page" id="page-1">
-        <h1>Installing</h1>
-        <p class="desc">Checking environment and installing OpenClaw...</p>
+        <h1>正在安装</h1>
+        <p class="desc">检测环境并安装 OpenClaw...</p>
         <div class="env-grid" id="env-section">
           <div class="env-item" id="env-node">
             <span class="env-status loading"></span>
             <div>
               <strong>Node.js</strong>
-              <span class="env-detail" id="node-ver">Checking...</span>
+              <span class="env-detail" id="node-ver">检测中...</span>
             </div>
           </div>
           <div class="env-item" id="env-npm">
             <span class="env-status loading"></span>
             <div>
               <strong>npm</strong>
-              <span class="env-detail" id="npm-ver">Checking...</span>
+              <span class="env-detail" id="npm-ver">检测中...</span>
             </div>
           </div>
           <div class="env-item" id="env-claw">
             <span class="env-status loading"></span>
             <div>
               <strong>OpenClaw</strong>
-              <span class="env-detail" id="claw-ver">Checking...</span>
+              <span class="env-detail" id="claw-ver">检测中...</span>
             </div>
           </div>
         </div>
@@ -101,39 +101,39 @@
 
       <!-- Step 2: Configure Kimi -->
       <div class="page" id="page-2">
-        <h1>Configure Kimi AI</h1>
-        <p class="desc">Enter your Moonshot (Kimi) API key. Get one from <span style="color:#ff9a56;cursor:pointer;" id="link-moonshot">platform.moonshot.cn</span></p>
+        <h1>配置 Kimi AI</h1>
+        <p class="desc">输入你的 Moonshot (Kimi) API 密钥。前往 <span style="color:#ff9a56;cursor:pointer;" id="link-moonshot">platform.moonshot.cn</span> 获取</p>
         <div class="form-group">
-          <label>Kimi API Key</label>
+          <label>Kimi API 密钥</label>
           <input type="password" id="input-api-key" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
-          <span class="form-hint">Your API key will be stored locally in ~/.openclaw/</span>
+          <span class="form-hint">密钥仅存储在本地 ~/.openclaw/ 目录中</span>
         </div>
         <div id="config-status" style="display:none;"></div>
       </div>
 
       <!-- Step 3: Done -->
       <div class="page" id="page-3">
-        <h1>All Set!</h1>
+        <h1>安装完成！</h1>
         <div class="done-container">
           <span class="done-icon">&#10003;</span>
-          <p class="desc">OpenClaw is installed and Kimi AI is configured. Click below to open the control dashboard.</p>
+          <p class="desc">OpenClaw 已安装，Kimi AI 已配置。点击下方按钮打开控制台。</p>
           <button class="btn btn-primary" id="btn-dashboard" style="margin-top:16px;padding:12px 32px;">
-            Open Dashboard
+            打开控制台
           </button>
           <div class="done-info" id="password-info" style="display:none;margin-top:16px;">
-            <p>Dashboard Password: <strong id="gw-password" style="user-select:text;cursor:text;letter-spacing:1px;"></strong>
-              <span id="btn-copy-pw" style="cursor:pointer;margin-left:8px;font-size:12px;color:#ff9a56;">[copy]</span>
+            <p>控制台密码：<strong id="gw-password" style="user-select:text;cursor:text;letter-spacing:1px;"></strong>
+              <span id="btn-copy-pw" style="cursor:pointer;margin-left:8px;font-size:12px;color:#ff9a56;">[复制]</span>
             </p>
-            <p style="font-size:11px;color:#666;margin-top:4px;">Enter this password in the dashboard Settings page.</p>
+            <p style="font-size:11px;color:#666;margin-top:4px;">在控制台设置页面输入此密码即可登录。</p>
           </div>
-          <p class="desc" style="margin-top:12px;font-size:12px;">Dashboard: <code style="background:#222;padding:2px 6px;border-radius:4px;">http://127.0.0.1:18789/</code></p>
+          <p class="desc" style="margin-top:12px;font-size:12px;">控制台地址：<code style="background:#222;padding:2px 6px;border-radius:4px;">http://127.0.0.1:18789/</code></p>
         </div>
       </div>
 
       <!-- Navigation -->
       <div class="nav">
-        <button class="btn btn-secondary" id="btn-prev" style="visibility:hidden;">Back</button>
-        <button class="btn btn-primary" id="btn-next">Install Now</button>
+        <button class="btn btn-secondary" id="btn-prev" style="visibility:hidden;">返回</button>
+        <button class="btn btn-primary" id="btn-next">开始安装</button>
       </div>
     </div>
   </div>
