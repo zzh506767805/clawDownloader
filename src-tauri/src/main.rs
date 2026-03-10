@@ -23,8 +23,8 @@ struct InstallResult {
 fn full_path() -> String {
     let home = std::env::var("HOME").unwrap_or_else(|_| "/Users/default".into());
     format!(
-        "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:{}/bin:{}/Library/pnpm:{}/.nvm/versions/node/current/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-        home, home, home
+        "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:{}/.npm-global/bin:{}/bin:{}/Library/pnpm:{}/.nvm/versions/node/current/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        home, home, home, home
     )
 }
 
