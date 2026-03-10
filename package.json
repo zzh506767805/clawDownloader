@@ -1,0 +1,9 @@
+{
+  "name": "openclaw-installer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cargo tauri dev",
+    "build": "cargo tauri build"
+  }
+}

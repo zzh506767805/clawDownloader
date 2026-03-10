@@ -1,0 +1,28 @@
+{
+  "productName": "OpenClaw Installer",
+  "version": "1.0.0",
+  "identifier": "com.openclawinstaller.app",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "OpenClaw Installer",
+        "width": 680,
+        "height": 520,
+        "resizable": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "plugins": {
+    "shell": {
+      "open": true
+    }
+  }
+}

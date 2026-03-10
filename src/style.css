@@ -1,0 +1,415 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #0a0a0a;
+  color: #e8e8e8;
+  overflow: hidden;
+  user-select: none;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background: #111;
+  border-right: 1px solid #222;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 28px;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6b4a, #ff9a56);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  transition: all 0.2s;
+}
+
+.step.active {
+  color: #e8e8e8;
+  background: #1a1a1a;
+}
+
+.step.done {
+  color: #4ade80;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #333;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.step.active .step-dot {
+  background: #ff6b4a;
+  box-shadow: 0 0 8px rgba(255, 107, 74, 0.4);
+}
+
+.step.done .step-dot {
+  background: #4ade80;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 40px 24px;
+  position: relative;
+}
+
+.page {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+.page.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.desc {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.6;
+}
+
+/* Feature list */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+}
+
+.feature-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feature-item strong {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.feature-item p {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Environment check */
+.env-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.env-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+}
+
+.env-item strong {
+  display: block;
+  font-size: 14px;
+}
+
+.env-detail {
+  font-size: 12px;
+  color: #777;
+}
+
+.env-status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.env-status.loading {
+  border: 2px solid #333;
+  border-top-color: #ff6b4a;
+  animation: spin 0.8s linear infinite;
+}
+
+.env-status.ok {
+  background: #16a34a;
+  border: none;
+}
+
+.env-status.ok::after {
+  content: "\2713";
+  color: white;
+  font-size: 12px;
+}
+
+.env-status.fail {
+  background: #dc2626;
+  border: none;
+}
+
+.env-status.fail::after {
+  content: "\2717";
+  color: white;
+  font-size: 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.env-action {
+  margin-top: 8px;
+}
+
+.env-action .btn {
+  font-size: 13px;
+}
+
+/* Install progress */
+.install-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #222;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff6b4a, #ff9a56);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.install-log {
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+  font-size: 12px;
+  color: #777;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 14px;
+  max-height: 180px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+/* Form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.form-group select,
+.form-group input {
+  padding: 10px 12px;
+  background: #151515;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #e8e8e8;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  border-color: #ff6b4a;
+}
+
+.form-hint {
+  font-size: 11px;
+  color: #555;
+}
+
+/* Launch */
+.launch-options {
+  padding: 14px 16px;
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: #ff6b4a;
+  width: 16px;
+  height: 16px;
+}
+
+/* Done */
+.done-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding-top: 20px;
+}
+
+.done-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16a34a, #4ade80);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: white;
+}
+
+.done-info {
+  background: #151515;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 16px 24px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.8;
+}
+
+.done-info strong {
+  color: #ff9a56;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid #1a1a1a;
+  margin-top: auto;
+}
+
+.btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff6b4a, #ff9a56);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #222;
+  color: #aaa;
+}
+
+.btn-secondary:hover {
+  background: #2a2a2a;
+}
