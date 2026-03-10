@@ -20,8 +20,20 @@ struct InstallResult {
     log: String,
 }
 
+fn full_path() -> String {
+    let home = std::env::var("HOME").unwrap_or_else(|_| "/Users/default".into());
+    format!(
+        "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:{}/bin:{}/Library/pnpm:{}/.nvm/versions/node/current/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        home, home, home
+    )
+}
+
 fn run_cmd(cmd: &str, args: &[&str]) -> (bool, String) {
-    match Command::new(cmd).args(args).output() {
+    match Command::new(cmd)
+        .args(args)
+        .env("PATH", full_path())
+        .output()
+    {
         Ok(output) => {
             let stdout = String::from_utf8_lossy(&output.stdout).trim().to_string();
             let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
